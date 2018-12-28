@@ -1,6 +1,7 @@
 galaxy_info:
-  author: Max Wenzin
+  role_name: aws_cloudformation_asg
   description: This role creates a AWS AutoScalingGroup and a ElasticLoadBalancer. The ASG will start a Docker image of your choice.
+  author: Max Wenzin
   company: Crisp
   license: MIT
   min_ansible_version: 2.4
