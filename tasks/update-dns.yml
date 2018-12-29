@@ -18,6 +18,7 @@
   route53:
     state: present
     overwrite: yes
+    wait: yes
     zone: "{{ route53_zone }}"
     record: "{{ _record }}"
     type: A
