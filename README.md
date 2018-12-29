@@ -1,11 +1,18 @@
-betrcode.aws-cf-asg
-===================
+betrcode.aws_cloudformation_asg
+===============================
 
 *Better Code AWS CloudFormation AutoScalingGroup*
 
-This role creates a AWS AutoScalingGroup and a 
-ElasticLoadBalancer. The ASG will start a Docker image of 
-your choice.
+This role creates a AWS AutoScalingGroup and a ElasticLoadBalancer. 
+The ASG will start a Docker image of your choice.
+
+Most of the resources are created by CloudFormation. 
+The Route 53 DNS entry is outside the CloudFormation stack because it acts as a pointer 
+between different ELBs (inside stacks) and can not be modified this way if it was inside a stack.
+
+The main upside of using CloudFormation is that cleanup of old resources is much easier.
+However, the Ansible module for querying which stacks exists is not very nice. It returns a hard-to-use
+data structure (for my use-case) and offers very little querying options. 
 
 
 Requirements
@@ -21,9 +28,20 @@ Packages:
 Role Variables
 --------------
 
-TODO: 
+* `vpc` - the AWS VPC identifier (your vpc)
+* `region` - the AWS region to deploy to (example: eu-west-1)
+* `subnets` - a list of subnets to deploy to. Must be at least 2. (needs to exist already)
+* `aws_key` - the instance key which can be used to log in to the created instances (needs to exist already)
+* `route53_zone` - the Route 53 zone where you want to create your DNS entry. (needs to exist already)
+* `instance_profile` - the name of the instance profile (or IAM Role) that the created instances will get. (needs to exist already)
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+
+Required environment variables:
+
+* `AWS_ACCESS_KEY_ID`
+* `AWS_SECRET_ACCESS_KEY`
+
+
 
 Dependencies
 ------------
@@ -34,21 +52,21 @@ Not dependent on any other role.
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
 ---
 
     - hosts: localhost
       connection: local
       gather_facts: yes  # needed for ansible_date_time
       roles:
-        - role: betrcode.aws-cf-asg
+        - role: betrcode.aws_cloudformation_asg
           docker_image: "nginx:latest"
+
 
 License
 -------
 
 MIT
+
 
 Author Information
 ------------------
