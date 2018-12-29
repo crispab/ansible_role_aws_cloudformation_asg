@@ -6,8 +6,10 @@ _role_timestamp: "{{ timestamp_override | default(ansible_date_time.epoch) }}"
 # These variables should not need to be (but can be) overridden by the user of the role.
 # A unique ASG name ensures that the ASG will always be created, never updated.
 # (Hence the combination of variables, including timestamp.)
+_aws_stack_base_name: "stack-{{ aws_asg_input.app_name }}"  # Used to cleanup old stacks
+
 _aws_stack:
-  name: "stack-{{ aws_asg_input.app_name }}-{{ aws_asg_input.app_version }}-{{ _role_timestamp }}"
+  name: "{{ _aws_stack_base_name }}-{{ aws_asg_input.app_version }}-{{ _role_timestamp }}"
 
 _aws_asg:
   name: "asg-{{ aws_asg_input.app_name }}-{{ aws_asg_input.app_version }}-{{ _role_timestamp }}"

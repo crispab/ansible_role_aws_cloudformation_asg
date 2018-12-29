@@ -11,7 +11,9 @@
     stack_name: "{{ item.key }}"
     state: absent
     region: "{{ region }}"
-  when: item.key != _aws_stack.name
+  when:
+    - item.key != _aws_stack.name  # Don't delete the stack we just created
+    - item.key is search(_aws_stack_base_name)  # Only delete stacks with our base name
   loop: "{{ lookup('dict', _all_stacks.ansible_facts.cloudformation, wantlist=True) }}"
   loop_control:
     label: "{{ item.key }}"
