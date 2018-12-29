@@ -1,2 +1,2 @@
 .idea
-ansible-role-aws-cloudformation-asg.iml
+*.iml
