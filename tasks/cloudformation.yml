@@ -4,7 +4,7 @@
   cloudformation:
     stack_name: "{{ _aws_stack.name }}"
     state: present
-    region: eu-central-1
+    region: "{{ region }}"
     template_body: "{{ lookup('file', 'cf-template.json') }}"
     template_parameters:
       Vpc: "{{ vpc }}"
