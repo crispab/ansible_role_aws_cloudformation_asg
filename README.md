@@ -15,6 +15,22 @@ However, the Ansible module for querying which stacks exists is not very nice. I
 data structure (for my use-case) and offers very little querying options. 
 
 
+Every time the playbook is run it will:
+
+* Create a new CloudFormation stack containing:
+    * A new SecurityGroup for the instances
+    * A new SecurityGroup for the ElasticLoadBalancer
+    * A new LaunchConfiguration for the AutoScalingGroup
+    * A new TargetGroup for the AutoScalingGroup
+    * A new AutoScalingGroup
+    * A new ElasticLoadBalancer
+    * A new Listener for the ElasticLoadBalancer
+* Create/update the DNS alias to point to the new load balancer
+* Delete (cleanup) any old stacks created by this role
+
+The main benefit of this is that *all* infrastructure is replaced on every deployment.
+
+
 Requirements
 ------------
 
