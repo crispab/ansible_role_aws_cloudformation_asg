@@ -1,7 +1,7 @@
-betrcode.aws_cloudformation_asg
-===============================
+crisp.aws_cloudformation_asg
+============================
 
-*Better Code AWS CloudFormation AutoScalingGroup*
+*Crisp AWS CloudFormation AutoScalingGroup*
 
 This role creates a AWS AutoScalingGroup and a ElasticLoadBalancer. 
 The ASG will start a Docker image of your choice.
